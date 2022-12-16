@@ -1,0 +1,88 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+
+}
+.page {
+    width: 50%;
+    margin: 5vh auto;
+
+}
+
+.topBox {
+    display: flex;
+    justify-content: space-between ;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+.heading {
+    color: rgb(114, 186, 42);
+}
+.line {
+    height: 1px;
+    background: black;
+    margin-bottom: 1.2rem;
+}
+.container {
+    width:40%;
+    min-width: 400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 60px);
+    box-shadow: 0 1px 5px rgba(104, 104, 104, 0.8);
+    border-radius: 15px;
+}
+.row1 {
+    grid-column:1 / span 2;
+    grid-row:1 / span 1;
+    padding: 0.7em;
+}
+.ptype1 {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.ptype2 {
+    font-size: 0.7rem;
+    color: darkgrey;
+}
+.dot{
+    grid-column:3 ;
+    grid-row:1 / span 1;
+    justify-self: end;
+    padding: 0.7em;
+
+}
+.image {
+    grid-column:1 / span 3;
+    grid-row:2 / span 3;
+}
+img {
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+.row3 {
+    grid-column:1 / span 2;
+    grid-row:5 / span 1;
+    padding: 0.7em;
+
+}
+.text {
+    grid-column:1 / span 2;
+    grid-row:6 / span 1;
+    padding: 0.7em;
+    font-weight: bold;
+}
+
+.date {
+    grid-column:3;
+    grid-row:5 / span 1;
+    justify-self: end;
+    padding: 0.7em;
+
+
+}
