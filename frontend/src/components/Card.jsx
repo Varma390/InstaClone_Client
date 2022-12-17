@@ -6,7 +6,7 @@ import share from '../images/share.jpg'
 
 
 const Card = (prop) => {
-    console.log(prop.pass);
+    // console.log(prop.pass);
 
     // const img = btoa(String.fromCharCode(...new Uint8Array(prop.pass.PostImage.data.data)))
     const img = btoa(new Uint8Array(prop.pass.PostImage.data.data).reduce(function (data, byte) {
