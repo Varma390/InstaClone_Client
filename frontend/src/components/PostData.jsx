@@ -35,7 +35,7 @@ const PostData = () => {
 
                     data.append("description1",description)
 
-                axios.post('http://localhost:3000/PostData',data)
+                axios.post(process.env.URL+'/PostData',data)
                 .then(res =>{
                     console.log(res)
                     navigate('/PostView')
