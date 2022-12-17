@@ -4,9 +4,14 @@ import heart from '../images/heart.jpg'
 import share from '../images/share.jpg'
 
 
+
 const Card = (prop) => {
-    console.log(prop.pass.PostImage.data.data);
-    const img = btoa(String.fromCharCode(...new Uint8Array(prop.pass.PostImage.data.data)))
+    console.log(prop.pass);
+
+    // const img = btoa(String.fromCharCode(...new Uint8Array(prop.pass.PostImage.data.data)))
+    const img = btoa(new Uint8Array(prop.pass.PostImage.data.data).reduce(function (data, byte) {
+        return data + String.fromCharCode(byte);
+    }, ''));
     return (
         <>
             <div className="container">
@@ -31,7 +36,7 @@ const Card = (prop) => {
                         <img src={share} style={{width: '20px', height:'20px' }}alt="send" />
                     <p>{prop.pass.likes} likes</p>
                 </div> 
-                <div className="date">{prop.pass.date}</div>
+                 <div className="date">{prop.pass.date}</div>
                 <div className="text">{prop.pass.description}</div>
             </div>
             <br></br>
