@@ -34,8 +34,8 @@ const PostData = () => {
                     // data.append("imageName",imageName)
 
                     data.append("description1",description)
-
-                axios.post(process.env.URL+'/PostData',data)
+                let url = process.env.REACT_APP_URL+'/PostData';
+                axios.post(url,data)
                 .then(res =>{
                     console.log(res)
                     navigate('/PostView')
