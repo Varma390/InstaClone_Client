@@ -20,18 +20,22 @@ const PostData = () => {
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         previewFile(file);
+        console.log(1)
     }
-    const previewFile = (file) =>{
+    const previewFile = async (file) =>{
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () =>{
             setPreviewSource(reader.result);
         }
+        console.log(previewSource)
+        finalData({...intialData, imagefile:previewSource});
+
     }
         const handleSubmit = async (e) =>{
             e.preventDefault();
             if(!previewSource) return;
-            finalData({...intialData, imagefile:previewSource});
+            // finalData({...intialData, imagefile:previewSource});
             console.log(intialData);
             // await fetch("http://localhost:3000/PostData",{
             //     method:'post',
@@ -42,7 +46,7 @@ const PostData = () => {
             //     console.log('reposne'+da)
             //     navigate('/PostView')
             // })
-            let url = process.env.REACT_APP_URL+'/PostData';
+            let url = process.env.REACT_APP_URL1+'/PostData';
             axios.post(url,intialData
             // axios.post("http://localhost:3000/PostData", intialData
             // ,{headers: {
@@ -50,7 +54,7 @@ const PostData = () => {
                     ).then(res =>{
                 console.log(res)
                 navigate('/PostView')
-            } )
+            } ).catch(err => console.log(err))
 
             // try{
 
