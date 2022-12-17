@@ -10,47 +10,84 @@ import {useNavigate} from 'react-router-dom';
 
 const PostData = () => {
 
-    const [author,finalauthor] = useState('')
-    const [location,finallocation] = useState('')
-    const [description,finaldescription] = useState('')
-    const [imageData,final] = useState('')
+    // const [author,finalauthor] = useState('')
+    // const [location,finallocation] = useState('')
+    // const [description,finaldescription] = useState('')
+    const [previewSource, setPreviewSource] = useState();
+    const [intialData,finalData] = useState({name:"",location:"",description:"",imagefile:""})
 
     const navigate = useNavigate();
-
-        const handleSubmit = (e) =>{
-
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        previewFile(file);
+    }
+    const previewFile = (file) =>{
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () =>{
+            setPreviewSource(reader.result);
+        }
+    }
+        const handleSubmit = async (e) =>{
             e.preventDefault();
-            try{
-                // axios.post('http://httpbin.org/post',intialData, {
-                // const data1 = [imageData,intialData]
-                    const data = new FormData();
-                    // data.append("intialData",JSON.stringify(intialData))
-                    // data.append("intialData",intialData)
+            if(!previewSource) return;
+            finalData({...intialData, imagefile:previewSource});
+            console.log(intialData);
+            // await fetch("http://localhost:3000/PostData",{
+            //     method:'post',
+            //     body:intialData
+            // })
+            // .then(res=>res.json())
+            // .then(da =>{
+            //     console.log('reposne'+da)
+            //     navigate('/PostView')
+            // })
+            let url = process.env.REACT_APP_URL+'/PostData';
+            axios.post(url,intialData
+            // axios.post("http://localhost:3000/PostData", intialData
+            // ,{headers: {
+            //         'Content-Type': 'multipart/form-data' }}
+                    ).then(res =>{
+                console.log(res)
+                navigate('/PostView')
+            } )
 
-                    data.append("imageData1",imageData)
-                    // data.append("filename",imageData.name)
-                    data.append("author1",author)
-                    data.append("location1",location)
-                    // data.append("imageName",imageName)
+            // try{
 
-                    data.append("description1",description)
-                let url = process.env.REACT_APP_URL+'/PostData';
-                axios.post(url,data)
-                .then(res =>{
-                    console.log(res)
-                    navigate('/PostView')
-                } )
-                .catch(err => console.log(err))
-                // axios.post('http://localhost:3000/PostData',{imageData,intialData},{
-                //     headers: {
-                //         'Content-Type': 'multipart/form-data' ,               
-                //     }})
-                // .then(res => console.log(res))
-                // .catch(err => console.log(err))
+            //     // axios.post('http://httpbin.org/post',intialData, {
+            //     // const data1 = [imageData,intialData]
+            //         const data = new FormData();
+                    
+            //         // data.append("intialData",JSON.stringify(intialData))
+            //         // data.append("intialData",intialData)
 
-            } catch(err) {
-                console.log(err);
-            }
+            //         data.append("imageData1",imageData)
+            //         // data.append("filename",imageData.name)
+            //         data.append("author1",author)
+            //         data.append("location1",location)
+            //         // data.append("imageName",imageName)
+
+            //         data.append("description1",description)
+                // let url = process.env.REACT_APP_URL1+'/PostData';
+                // axios.post(url,data)
+            //     console.log(data)
+            //     axios.post('http://localhost:3000/PostData',data)
+
+                // .then(res =>{
+                //     console.log(res)
+                //     navigate('/PostView')
+                // } )
+            //     .catch(err => console.log(err))
+            //     // axios.post('http://localhost:3000/PostData',{imageData,intialData},{
+            //     //     headers: {
+            //     //         'Content-Type': 'multipart/form-data' ,               
+            //     //     }})
+            //     // .then(res => console.log(res))
+            //     // .catch(err => console.log(err))
+
+            // } catch(err) {
+            //     console.log(err);
+            // }
              
         }
   
@@ -73,19 +110,14 @@ const PostData = () => {
                 <div>
                     {/* <input className="form-control mb-3" type="text" placeholder='No file choosen' /> */}
                     <input className="form-control mb-3" type="file" id="postData" name='imageData'  
-                    onChange={e => { 
-                        // finalData({...intialData, imageData: e.target.files})
-                        // finalData({...intialData, e.target.files[0]},
-                        // finalimageName(e.target.files[0].name)
-                        final(e.target.files[0])
-                        } }
+                    onChange={handleFileInputChange}
                             accept=".png, .jpg, .jpeg" />
                 </div>
         <div>
             <input className="form-control mb-3" type="text" placeholder="Author" name='author' 
             onChange={(e) =>{
- finalauthor(e.target.value)
-// //  finalData({...intialData, name: e.target.value})
+//  finalauthor(e.target.value)
+  finalData({...intialData, name: e.target.value})
 }} 
 />
         </div>
@@ -93,16 +125,16 @@ const PostData = () => {
         <div>
             <input className="form-control mb-3" type="text" placeholder="Location" name="location" 
             onChange={(e) =>{
-                 finallocation(e.target.value)
-//  finalData({...intialData, location: e.target.value})
+                //  finallocation(e.target.value)
+ finalData({...intialData, location: e.target.value})
 }}
 />
         </div>
         <div>
         <input className="form-control mb-3" type="text" placeholder="Description" name='description' 
         onChange={(e) =>{
-finaldescription( e.target.value)
-// finalData({...intialData, description: e.target.value}) 
+// finaldescription( e.target.value)
+finalData({...intialData, description: e.target.value}) 
 } } 
 />
 

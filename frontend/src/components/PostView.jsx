@@ -15,8 +15,9 @@ const PostView = () => {
             let url = process.env.REACT_APP_URL+'/PostView';
             await axios.get(url)
             // await axios.get('http://localhost:3000/PostView')
-            .then(res =>{
-                updateState(res.data)
+            .then(ress =>{
+                console.log(ress)
+                updateState(ress.data)
             } )
             .catch(err => console.log(err))
         }

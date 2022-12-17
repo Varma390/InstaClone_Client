@@ -9,9 +9,9 @@ const Card = (prop) => {
     // console.log(prop.pass);
 
     // const img = btoa(String.fromCharCode(...new Uint8Array(prop.pass.PostImage.data.data)))
-    const img = btoa(new Uint8Array(prop.pass.PostImage.data.data).reduce(function (data, byte) {
-        return data + String.fromCharCode(byte);
-    }, ''));
+    // const img = btoa(new Uint8Array(prop.pass.PostImage.data.data).reduce(function (data, byte) {
+    //     return data + String.fromCharCode(byte);
+    // }, ''));
     return (
         <>
             <div className="container">
@@ -26,7 +26,7 @@ const Card = (prop) => {
                 </div> 
                 <div className="image">
                     
-                    <img src={`data:image/png;base64,${img}`} alt="asfs"></img>
+                    <img src={prop.pass.file} alt="asfs"></img>
 
 
                 </div>
