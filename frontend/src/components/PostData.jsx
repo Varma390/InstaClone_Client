@@ -46,7 +46,7 @@ const PostData = () => {
             //     console.log('reposne'+da)
             //     navigate('/PostView')
             // })
-            let url = process.env.REACT_APP_URL1+'/PostData';
+            let url = process.env.REACT_APP_URL+'/PostData';
             axios.post(url,intialData
             // axios.post("http://localhost:3000/PostData", intialData
             // ,{headers: {
