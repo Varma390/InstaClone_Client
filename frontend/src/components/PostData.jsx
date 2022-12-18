@@ -9,34 +9,48 @@ import {useNavigate} from 'react-router-dom';
 
 
 const PostData = () => {
-
-    // const [author,finalauthor] = useState('')
-    // const [location,finallocation] = useState('')
-    // const [description,finaldescription] = useState('')
-    const [previewSource, setPreviewSource] = useState();
-    const [intialData,finalData] = useState({name:"",location:"",description:"",imagefile:""})
-
     const navigate = useNavigate();
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        previewFile(file);
-        console.log(1)
-    }
-    const previewFile = async (file) =>{
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () =>{
-            setPreviewSource(reader.result);
-        }
-        console.log(previewSource)
-        finalData({...intialData, imagefile:previewSource});
 
-    }
-        const handleSubmit = async (e) =>{
+    const [author,finalauthor] = useState('')
+    const [location,finallocation] = useState('')
+    const [description,finaldescription] = useState('')
+    // const [data,fdata]= useState('')
+    // const [previewSource, setPreviewSource] = useState('');
+    const [imageData,final] = useState('')
+
+    // const [intialData,finalData] = useState({name:"",location:"",description:"",imagefile:""})
+
+
+    // useEffect(() => {
+    //     console.log('data--'+ data)
+    //    setPreviewSource(data)
+
+    //     console.log('prev---'+ previewSource)
+    //     finalData({...intialData, imagefile:data});
+        // console.log(intialData);
+
+    // },[data])
+    // const handleFileInputChange = async (e) => {
+    //     const file = e.target.files[0];
+    //     previewFile(file);
+    //     console.log(1)
+    // }
+    // const previewFile =  (file) =>{
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onloadend = () =>{
+    //         setPreviewSource(reader.result);
+    //     }
+    //     console.log(previewSource)
+        
+        // finalData({...intialData, imagefile:previewSource});
+
+    // }
+        const handleSubmit =  (e) =>{
             e.preventDefault();
-            if(!previewSource) return;
+            // if(!previewSource) return;
             // finalData({...intialData, imagefile:previewSource});
-            console.log(intialData);
+            // console.log(intialData);
             // await fetch("http://localhost:3000/PostData",{
             //     method:'post',
             //     body:intialData
@@ -46,8 +60,19 @@ const PostData = () => {
             //     console.log('reposne'+da)
             //     navigate('/PostView')
             // })
+            // console.log(imageData,author,location,description)
+            const data = new FormData(e.target);
+            data.append("imageData1",imageData)
+            data.append("description1",description)
+            data.append("author1",author)
+            
+            data.append("location1",location)
+            // data.append("intialData1",intialData)
+            for (var key of data.entries()) {
+                console.log(key[0] + ', ' + key[1])
+            }
             let url = process.env.REACT_APP_URL+'/PostData';
-            axios.post(url,intialData
+            axios.post(url,data
             // axios.post("http://localhost:3000/PostData", intialData
             // ,{headers: {
             //         'Content-Type': 'multipart/form-data' }}
@@ -67,11 +92,8 @@ const PostData = () => {
 
             //         data.append("imageData1",imageData)
             //         // data.append("filename",imageData.name)
-            //         data.append("author1",author)
-            //         data.append("location1",location)
             //         // data.append("imageName",imageName)
 
-            //         data.append("description1",description)
                 // let url = process.env.REACT_APP_URL1+'/PostData';
                 // axios.post(url,data)
             //     console.log(data)
@@ -109,36 +131,42 @@ const PostData = () => {
         <div className="container2">
 {/* // In the form tag, the enctype attribute must be set to multipart/form-data, for Multer to work */}
 {/* types of encoding - While multipart or form-data allows the files to be included in the form data, text/ plain sends the data as plain text without encoding. It is used for debugging and not for production. The application/x-www-form-urlencoded encodes the data as query string – separating key – value pairs assigned with “ = “ and other symbols like “&.” */}
-            <form onSubmit={handleSubmit}  >
+            <form onSubmit={handleSubmit} >
 {/* Also, in the form tag, we have specified the action attribute to #. This is because we haven’t made any API endpoint to receive the data from this form. we will create that in backend */}
                 <div>
                     {/* <input className="form-control mb-3" type="text" placeholder='No file choosen' /> */}
-                    <input className="form-control mb-3" type="file" id="postData" name='imageData'  
-                    onChange={handleFileInputChange}
+                    <input className="form-control mb-3" type="file" id="postData"   
+                    // onChange={handleFileInputChange}
+                    onChange={e => { 
+                        // finalData({...intialData, imageData: e.target.files})
+                        // finalData({...intialData, e.target.files[0]},
+                        // finalimageName(e.target.files[0].name)
+                        final(e.target.files[0])
+                        } }
                             accept=".png, .jpg, .jpeg" />
                 </div>
         <div>
-            <input className="form-control mb-3" type="text" placeholder="Author" name='author' 
+            <input className="form-control mb-3" type="text" placeholder="Author"  
             onChange={(e) =>{
-//  finalauthor(e.target.value)
-  finalData({...intialData, name: e.target.value})
+ finalauthor(e.target.value)
+//   finalData({...intialData, name: e.target.value})
 }} 
 />
         </div>
 
         <div>
-            <input className="form-control mb-3" type="text" placeholder="Location" name="location" 
+            <input className="form-control mb-3" type="text" placeholder="Location"  
             onChange={(e) =>{
-                //  finallocation(e.target.value)
- finalData({...intialData, location: e.target.value})
+                 finallocation(e.target.value)
+//  finalData({...intialData, location: e.target.value})
 }}
 />
         </div>
         <div>
-        <input className="form-control mb-3" type="text" placeholder="Description" name='description' 
+        <input className="form-control mb-3" type="text" placeholder="Description"  
         onChange={(e) =>{
-// finaldescription( e.target.value)
-finalData({...intialData, description: e.target.value}) 
+finaldescription( e.target.value)
+// finalData({...intialData, description: e.target.value}) 
 } } 
 />
 
